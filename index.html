@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convivencia Escolar - Escuela Básica Clara Estrella</title>
+    <title>Convivencia Escolar - Administrador</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -16,8 +16,21 @@
         header {
             background-color: #0033cc;
             color: white;
-            padding: 1rem 2rem;
-            text-align: center;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .login {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffcc00;
+            color: #0033cc;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
         }
         nav ul {
             list-style: none;
@@ -35,184 +48,128 @@
             color: #0033cc;
             font-weight: bold;
         }
+        main {
+            padding: 2rem;
+        }
         section {
-            margin: 2rem auto;
+            margin: 2rem 0;
             padding: 1rem 2rem;
             background-color: white;
             border-radius: 8px;
-            max-width: 800px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        section h2 {
-            color: #0033cc;
-        }
-        button {
-            background-color: #0033cc;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #002699;
         }
         footer {
             text-align: center;
             padding: 1rem;
             background-color: #0033cc;
             color: white;
-            position: relative;
+            position: fixed;
             bottom: 0;
             width: 100%;
         }
-        .admin-login {
-            margin-bottom: 2rem;
+        .admin-only {
+            display: none;
         }
-        .image-banner {
-            width: 100%;
-            height: 300px;
-            background: url('https://source.unsplash.com/1600x900/?school,education') no-repeat center center;
-            background-size: cover;
+        .admin-panel {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
-        .section-image {
-            margin: 2rem 0;
-            text-align: center;
-        }
-        .section-image img {
-            width: 100%;
-            max-width: 600px;
+        .admin-panel .card {
+            width: 48%;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #e6e6ff;
             border-radius: 8px;
         }
-        .case-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-        .case-table th, .case-table td {
-            border: 1px solid #ccc;
-            padding: 0.5rem;
-            text-align: left;
-        }
-        .case-table th {
-            background-color: #0033cc;
-            color: white;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Convivencia Escolar - Escuela Básica Clara Estrella</h1>
-        <nav>
-            <ul>
-                <li><a href="#fotos">Fotos</a></li>
-                <li><a href="#documentos">Documentos</a></li>
-                <li><a href="#actividades">Actividades</a></li>
-                <li><a href="#seguimiento">Seguimiento de Casos</a></li>
-                <li><a href="#manual">Manual</a></li>
-                <li><a href="#reportes">Reportes</a></li>
-            </ul>
-        </nav>
+        <h1>Convivencia Escolar - Administrador</h1>
+        <a href="#" class="login" id="loginButton">Iniciar Sesión</a>
     </header>
 
-    <div class="image-banner"></div>
+    <nav>
+        <ul>
+            <li><a href="#fotos" onclick="navigate('fotos')">Fotos</a></li>
+            <li><a href="#documentos" onclick="navigate('documentos')">Documentos</a></li>
+            <li><a href="#actividades" onclick="navigate('actividades')">Actividades</a></li>
+            <li><a href="#manual" onclick="navigate('manual')">Manual de Convivencia</a></li>
+            <li><a href="#calendario" onclick="navigate('calendario')">Calendario Escolar</a></li>
+        </ul>
+    </nav>
 
     <main>
-        <!-- Sección de Inicio de Sesión para Administradores -->
-        <section id="admin-login" class="admin-login">
-            <h2>Inicio de Sesión para Administradores</h2>
-            <form onsubmit="return validateAdminLogin()">
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-
-                <button type="submit">Iniciar Sesión</button>
-            </form>
-        </section>
-
-        <!-- Sección de Fotos -->
-        <section id="fotos">
-            <h2>Fotos de Actividades</h2>
-            <p>Aquí se publicarán las fotos de las actividades realizadas por el equipo de convivencia escolar.</p>
-            <div class="section-image">
-                <img src="https://source.unsplash.com/800x600/?school,community" alt="Foto de convivencia escolar">
+        <section id="adminPanel" class="hidden">
+            <h2>Panel de Administrador</h2>
+            <div class="admin-panel">
+                <div class="card">
+                    <h3>Seguimiento de Casos</h3>
+                    <p>Registre casos por curso y estudiante:</p>
+                    <button onclick="openTracking()">Abrir Seguimiento</button>
+                </div>
+                <div class="card">
+                    <h3>Configuración de la Página</h3>
+                    <p>Modifique y agregue contenido:</p>
+                    <button onclick="openConfig()">Abrir Configuración</button>
+                </div>
             </div>
         </section>
 
-        <!-- Sección de Documentos -->
-        <section id="documentos">
-            <h2>Documentos</h2>
-            <p>Aquí puedes subir y visualizar documentos importantes para la comunidad educativa.</p>
-            <form action="/upload-document" method="post" enctype="multipart/form-data">
-                <label for="document">Subir Documento:</label>
-                <input type="file" id="document" name="document" accept="application/pdf" required>
-                <button type="submit">Subir Documento</button>
+        <section id="manual" class="hidden">
+            <h2>Manual de Convivencia</h2>
+            <p>Suba un archivo PDF para compartirlo con la comunidad:</p>
+            <form id="uploadManualForm">
+                <input type="file" id="manualFile" accept=".pdf" required>
+                <button type="submit">Subir Manual</button>
             </form>
-            <p>Últimos documentos subidos:</p>
-            <ul>
-                <li><a href="/docs/sample1.pdf" target="_blank">Documento 1</a></li>
-                <li><a href="/docs/sample2.pdf" target="_blank">Documento 2</a></li>
-            </ul>
+            <div id="manualPreview" class="hidden">
+                <iframe src="" width="100%" height="400px"></iframe>
+                <a href="#" download id="manualDownload">Descargar Manual</a>
+            </div>
         </section>
 
-        <!-- Sección de Actividades Realizadas -->
-        <section id="actividades">
-            <h2>Registro de Actividades Realizadas</h2>
-            <p>Registra y consulta las actividades realizadas por el equipo.</p>
-        </section>
+        <!-- Otras secciones se agregarán dinámicamente -->
+    </main>
 
-        <!-- Sección de Seguimiento de Casos -->
-        <section id="seguimiento">
-            <h2>Seguimiento de Casos</h2>
-            <p>Selecciona el curso para gestionar casos de estudiantes:</p>
-            <form id="case-selector">
-                <label for="curso">Curso:</label>
-                <select id="curso" name="curso">
-                    <option value="">Seleccione un curso</option>
-                    <option value="Prekinder A">Prekinder A</option>
-                    <option value="Prekinder B">Prekinder B</option>
-                    <option value="Kinder A">Kinder A</option>
-                    <option value="Kinder B">Kinder B</option>
-                    <option value="1° A">1° A</option>
-                    <option value="1° B">1° B</option>
-                    <option value="2° A">2° A</option>
-                    <option value="2° B">2° B</option>
-                    <option value="3° A">3° A</option>
-                    <option value="3° B">3° B</option>
-                    <option value="4° A">4° A</option>
-                    <option value="4° B">4° B</option>
-                    <option value="5° A">5° A</option>
-                    <option value="5° B">5° B</option>
-                    <option value="6° A">6° A</option>
-                    <option value="6° B">6° B</option>
-                    <option value="7° A">7° A</option>
-                    <option value="7° B">7° B</option>
-                    <option value="8° A">8° A</option>
-                    <option value="8° B">8° B</option>
-                </select>
-                <button type="button" onclick="loadCases()">Seleccionar</button>
-            </form>
-            <table class="case-table">
-                <thead>
-                    <tr>
-                        <th>Estudiante</th>
-                        <th>Caso</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="case-list">
-                    <tr>
-                        <td colspan="4">Selecciona un curso para ver los casos registrados.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+    <footer>
+        <p>&copy; 2025 Escuela Básica Clara Estrella - Todos los derechos reservados.</p>
+    </footer>
 
-        <!-- Sección del Manual de Convivencia -->
-        <section id="manual">
-            <h2>Manual de Convivencia Escolar</h2>
-            <p>Consulta y descarga el manual actualizado:</p>
-            <a href="
+    <script>
+        function loginAdmin() {
+            const email = prompt("Correo Electrónico:");
+            const password = prompt("Contraseña:");
+
+            if (email === "duplaclaraestrella2017@gmail.com" && password === "dupla2017") {
+                document.getElementById('adminPanel').classList.remove('hidden');
+                alert("Sesión iniciada como Administrador.");
+            } else {
+                alert("Credenciales incorrectas.");
+            }
+        }
+
+        function navigate(section) {
+            // Lógica para abrir una nueva pantalla con contenido de la sección
+            alert(`Navegando a la sección: ${section}`);
+        }
+
+        document.getElementById('loginButton').addEventListener('click', loginAdmin);
+
+        document.getElementById('uploadManualForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const file = document.getElementById('manualFile').files[0];
+            const preview = document.getElementById('manualPreview');
+            preview.classList.remove('hidden');
+            const iframe = preview.querySelector('iframe');
+            iframe.src = URL.createObjectURL(file);
+            const downloadLink = document.getElementById('manualDownload');
+            downloadLink.href = iframe.src;
+        });
+    </script>
+</body>
+</html>
